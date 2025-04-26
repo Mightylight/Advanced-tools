@@ -1,5 +1,6 @@
 [bootstrap]
-main_collection = /main/main.collectionc
+main_collection = /scenes/main.collectionc
+render = /builtins/render/default.renderc
 
 [script]
 shared_state = 1
@@ -8,6 +9,7 @@ shared_state = 1
 width = 960
 height = 640
 high_dpi = 1
+display_profiles = /builtins/render/default.display_profilesc
 
 [android]
 input_method = HiddenInputField
@@ -17,4 +19,20 @@ scale_mode = stretch
 
 [project]
 title = Advanced_Tools_Defold
+dependencies#0 = https://github.com/britzl/defold-metrics/archive/master.zip
+
+[physics]
+max_collision_object_count = 2048
+type = 3D
+max_contacts = 1000000
+max_collisions = 1000000
+
+[model]
+max_count = 2048
+
+[collection]
+max_instances = 2048
+
+[graphics]
+max_draw_calls = 2048
 
