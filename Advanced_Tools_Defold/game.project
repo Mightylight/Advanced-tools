@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /scenes/main.collectionc
+main_collection = /scenes/3D_physics_test.collectionc
 render = /builtins/render/default.renderc
 
 [script]
@@ -22,17 +22,17 @@ title = Advanced_Tools_Defold
 dependencies#0 = https://github.com/britzl/defold-metrics/archive/master.zip
 
 [physics]
-max_collision_object_count = 2048
+max_collision_object_count = 8092
 type = 3D
 max_contacts = 1000000
 max_collisions = 1000000
 
 [model]
-max_count = 2048
+max_count = 8092
 
 [collection]
-max_instances = 2048
+max_instances = 8092
 
 [graphics]
-max_draw_calls = 2048
+max_draw_calls = 8092
 

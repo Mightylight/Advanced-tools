@@ -1,4 +1,6 @@
 local index = 0
+local is_profiler_open = false
+local prefab_table = {}
 local fps_table = {}
 local fps = require("metrics.fps")
 local mem = require("metrics.mem")
@@ -7,33 +9,38 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 	msg.post("@render:", "use_camera_projection")
 	msg.post("camera", "acquire_camera_focus")
-	self.light = vmath.vector4(0, 0, go.get_position().z + 1, 0)
 end	
 
 function on_input(self, action_id, action)
-	if action_id == hash("space") then
-		local spawned_prefab = collectionfactory.create("#collectionfactory")
-		local position = vmath.vector3()
-		go.set_position(position,spawned_prefab[hash("/go")])
-		if index % 50 == 0 then
-			table.insert(fps_table ,{objects = index, fps = fps.fps()})
-		end
-		
-		local url = "/collection" .. index .. "/go#cube"
-		index = index + 1
+	if action_id == hash("space") and action.pressed then
+		timer.delay(.5, true, function ()
+			for i = 1, 10 do
+				-- do things
+				if index % 50 == 0 then
+					table.insert(fps_table ,{objects = index, fps = fps.fps(), memory = mem.mem()})
+				end
+				index = index + 1
+				local spawned_prefab = factory.create("#factory")
+				pprint(spawned_prefab)
+				local scale = vmath.vector3(.4,.4,.4)
+				go.set_scale(scale,spawned_prefab)
+				table.insert(prefab_table,spawned_prefab)
+			end
+		end)
+	end
+	if action_id == hash("m") and action.pressed then
+		pprint(fps_table)
 	end
 
-	if action_id == hash("m") then
-		pprint(fps_table)
-	end	
+	if action_id == hash("n") and action.pressed then
+		profiler.enable_ui(not is_profiler_open)
+		is_profiler_open = not is_profiler_open
+	end
 end
+
 function update(self, dt)
 	fps.update()
+	mem.update()
 	fps.draw()
-end
-
-
-function on_reload(self)
-	-- Toggle the visual profiler on hot reload.
-	
+	-- mem.draw()
 end
