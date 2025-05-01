@@ -4,6 +4,14 @@ local prefab_table = {}
 local fps_table = {}
 local fps = require("metrics.fps")
 local mem = require("metrics.mem")
+go.property("OBJECT_PER_CYCLE", 10)
+go.property("INTERVAL", .5)
+
+local spawn_area = {
+	x = {min = -4, max = 4},
+	y = {min = -9, max = -1},
+	z = {min = -4, max = 4},
+}
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -13,15 +21,18 @@ end
 
 function on_input(self, action_id, action)
 	if action_id == hash("space") and action.pressed then
-		timer.delay(.5, true, function ()
-			for i = 1, 10 do
+		timer.delay(self.INTERVAL, true, function ()
+			for i = 1, self.OBJECT_PER_CYCLE do
 				-- do things
 				if index % 50 == 0 then
 					table.insert(fps_table ,{objects = index, fps = fps.fps(), memory = mem.mem()})
 				end
 				index = index + 1
-				local spawned_prefab = factory.create("#factory")
-				pprint(spawned_prefab)
+				local x = math.random(spawn_area.x.min,spawn_area.x.max)
+				local y = math.random(spawn_area.y.min,spawn_area.y.max)
+				local z = math.random(spawn_area.z.min,spawn_area.z.max)
+				local position = vmath.vector3(x,y,z)
+				local spawned_prefab = factory.create("#factory",position)
 				local scale = vmath.vector3(.4,.4,.4)
 				go.set_scale(scale,spawned_prefab)
 				table.insert(prefab_table,spawned_prefab)

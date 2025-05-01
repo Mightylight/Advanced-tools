@@ -30,6 +30,11 @@ embedded_instances {
   data: "components {\n"
   "  id: \"spawner\"\n"
   "  component: \"/scripts/spawner.script\"\n"
+  "  properties {\n"
+  "    id: \"OBJECT_PER_CYCLE\"\n"
+  "    value: \"50.0\"\n"
+  "    type: PROPERTY_TYPE_NUMBER\n"
+  "  }\n"
   "}\n"
   "embedded_components {\n"
   "  id: \"factory\"\n"
@@ -86,7 +91,7 @@ embedded_instances {
   ""
   position {
     y: -5.0
-    z: -1.0
+    z: -5.0
   }
   rotation {
     x: 0.70710677
