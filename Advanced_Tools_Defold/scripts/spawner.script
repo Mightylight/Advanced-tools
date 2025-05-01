@@ -6,12 +6,9 @@ local fps = require("metrics.fps")
 local mem = require("metrics.mem")
 go.property("OBJECT_PER_CYCLE", 10)
 go.property("INTERVAL", .5)
-
-local spawn_area = {
-	x = {min = -4, max = 4},
-	y = {min = -9, max = -1},
-	z = {min = -4, max = 4},
-}
+go.property("XPLANE", vmath.vector3(0,0,0))
+go.property("YPLANE", vmath.vector3(0,0,0))
+go.property("ZPLANE", vmath.vector3(0,0,0))
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -28,9 +25,9 @@ function on_input(self, action_id, action)
 					table.insert(fps_table ,{objects = index, fps = fps.fps(), memory = mem.mem()})
 				end
 				index = index + 1
-				local x = math.random(spawn_area.x.min,spawn_area.x.max)
-				local y = math.random(spawn_area.y.min,spawn_area.y.max)
-				local z = math.random(spawn_area.z.min,spawn_area.z.max)
+				local x = math.random(self.XPLANE.x,self.XPLANE.y)
+				local y = math.random(self.YPLANE.x,self.YPLANE.y)
+				local z = math.random(self.ZPLANE.x,self.ZPLANE.y)
 				local position = vmath.vector3(x,y,z)
 				local spawned_prefab = factory.create("#factory",position)
 				local scale = vmath.vector3(.4,.4,.4)
@@ -41,6 +38,9 @@ function on_input(self, action_id, action)
 	end
 	if action_id == hash("m") and action.pressed then
 		pprint(fps_table)
+		for key, value in pairs(fps_table) do
+			print("Objects: " .. value.objects .. ", fps: " .. value.fps)
+		end
 	end
 
 	if action_id == hash("n") and action.pressed then

@@ -1,0 +1,6 @@
+default_animation: "square"
+material: "/builtins/materials/sprite.material"
+textures {
+  sampler: "texture_sampler"
+  texture: "/assets/tilemaps/tilesource.tilesource"
+}
