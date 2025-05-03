@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /scenes/2D_physics_test.collectionc
+main_collection = /scenes/moving_sprites.collectionc
 render = /builtins/render/default.renderc
 
 [script]
@@ -32,11 +32,14 @@ max_collisions = 1000000
 max_count = 8092
 
 [collection]
-max_instances = 8092
+max_instances = 30000
 
 [graphics]
 max_draw_calls = 8092
 
 [sprite]
-max_count = 8092
+max_count = 30000
+
+[profiler]
+track_cpu = 1
 

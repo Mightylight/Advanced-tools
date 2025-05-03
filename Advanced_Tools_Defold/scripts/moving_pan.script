@@ -1,0 +1,36 @@
+go.property("speed", 50)
+go.property("radius", 50)
+
+local function random_inside_unit_circle()
+	local angle = math.random() * 2 * math.pi
+	local radius = math.sqrt(math.random())
+
+	local x = radius * math.cos(angle)
+	local y = radius * math.sin(angle)
+
+	return x, y
+end
+
+local function get_new_point(self)
+	local x,y = random_inside_unit_circle()
+	local new_point = vmath.vector3(x,y,0) * self.radius
+	self.to_point = self.start_point + new_point
+end
+
+function init(self)
+	self.start_point = vmath.vector3(0,0,0)
+	self.to_point = vmath.vector3(0,0,0)
+	get_new_point(self)
+	self.current_pos = go.get_position(".")
+end
+
+function update(self, dt)
+	if vmath.length(self.to_point - self.current_pos) < .1 then
+		get_new_point(self)
+	end
+	local direction = vmath.normalize(self.to_point - self.current_pos)
+	local step = direction * self.speed * dt
+	self.current_pos = self.current_pos + step
+	
+	go.set_position(self.current_pos,".")
+end
