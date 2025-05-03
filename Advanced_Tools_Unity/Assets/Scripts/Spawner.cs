@@ -10,56 +10,86 @@ using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
-    //Data Saving variables
-    [SerializeField] private string _fileName = "physics_test_unity.txt";
-    [SerializeField] private string _filePath = Application.streamingAssetsPath;
-    [SerializeField] private string _delimiter = ",";
-
+    [Header("Data Collection")]
+    [SerializeField] private string _fileName = "/physics_test_unity.txt";
+    
     [SerializeField] private int _dataSize = 5000;
-    [Tooltip("The amount of objects after a record is stored in the data array")]
-    [SerializeField] private int _samplingRate = 50;
-
-    private List<string> _dataList = new List<string>();
+    [Tooltip("The amount of objects after a snapshot is stored in the data array")]
+    [SerializeField] private int _samplingInterval = 50;
+    
+    private string _filePath = Application.streamingAssetsPath;
+    private string _seperator = ",";
+    private List<string> _dataList = new ();
     private int _objectsCount;
     
-    //Spawning variables
+    [Space(10)]
+    
+    [Header("Spawning")]
+    [SerializeField] private bool _useContinuousSpawning = true;
     [SerializeField] private GameObject _prefab;
     [SerializeField] private bool _isSpawningEnabled;
-    [SerializeField] private int _objectsPerCycle = 10;
     [SerializeField] private float _interval = .5f;
     
+    [Space(10)]
+    
+    [Header("Spawn Area")]
     [SerializeField] private Vector2 _xPlane = new Vector2(-4f,4f);
     [SerializeField] private Vector2 _zPlane = new Vector2(-4f,4f);
     
     [SerializeField] private Vector2 _yzPlane  = new Vector2(-10,0);
+    
+    private int _objectsPerCycle;
 
+    private List<GameObject> _objects = new();
+    
     private float _currentFPS;
     private float _averageDeltaTime = 1f / 60f;
 
     private void Start()
     {
-
+        _objectsPerCycle = _samplingInterval;
         if (!Directory.Exists(_filePath))
         {
             Directory.CreateDirectory(_filePath);
         }
         
         File.Create(_filePath + _fileName).Close();
-        
     }
 
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (_useContinuousSpawning)
         {
-            StartCoroutine(SpawningCoroutine());
-        } 
-        else if (Input.GetKeyUp(KeyCode.M))
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                StartCoroutine(ContinuousSpawningCoroutine());
+            } 
+        }
+        else
         {
-            PrintData();
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                SpawnCycle();
+            }
+            
+            if(Input.GetKeyUp(KeyCode.Minus)) 
+            {
+                DestroyCycle();
+            }
+        }
+        
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            print($"Object count {_objectsCount}");
             SaveData();
         }
+
+        UpdateFPS();
+    }
+
+    private void UpdateFPS()
+    {
         _averageDeltaTime = Mathf.Lerp(_averageDeltaTime, Time.deltaTime, .05f);
         _currentFPS = 1f / _averageDeltaTime;
     }
@@ -70,39 +100,51 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i < _dataList.Count; i++)
         {
             string temp = _dataList[i];
-            string saveData = (i * _samplingRate) + _delimiter + temp + _delimiter;
+            string saveData = (i * _samplingInterval) + _seperator + temp + _seperator;
             data[i] = saveData;
         }
         
         File.WriteAllLines(Path.Combine(_filePath, _fileName), data);
         print($"Saved to {_filePath}");
     }
-    
-    private void PrintData()
+
+    private void SpawnCycle()
     {
-        print(_objectsCount);
+        if (!_isSpawningEnabled || _objectsCount >= _dataSize) return;
+        for (int i = 0; i < _objectsPerCycle; i++)
+        {
+            if (_objectsCount % _samplingInterval == 0)
+            {
+                _dataList.Add(_currentFPS.ToString());
+            }
+            
+            Vector3 position = new (
+                Random.Range(_xPlane.x, _xPlane.y),
+                Random.Range(_yzPlane.x, _yzPlane.y),
+                Random.Range(_zPlane.x, _zPlane.y)
+            );
+            GameObject spawnedObject = Instantiate(_prefab, position, Quaternion.identity);
+            _objects.Add(spawnedObject);
+            _objectsCount++;
+        }
     }
 
+    private void DestroyCycle()
+    {
+        if (_objectsCount <= 0) return;
+        for (int i = _objectsCount; i > _objectsCount - _objectsPerCycle; i--)
+        {
+            _objects[i].SetActive(false);
+            _objects.RemoveAt(i);
+            _objectsCount--;
+        }
+    }
 
-    private IEnumerator SpawningCoroutine()
+    private IEnumerator ContinuousSpawningCoroutine()
     {
         while (_isSpawningEnabled && _objectsCount < _dataSize)
         {
-            for (int i = 0; i < _objectsPerCycle; i++)
-            {
-                if (_objectsCount % _samplingRate == 0)
-                {
-                    _dataList.Add(_currentFPS.ToString());
-                }
-            
-                Vector3 position = new (
-                    Random.Range(_xPlane.x, _xPlane.y),
-                    Random.Range(_yzPlane.x, _yzPlane.y),
-                    Random.Range(_zPlane.x, _zPlane.y)
-                );
-                Instantiate(_prefab, position, Quaternion.identity);
-                _objectsCount++;
-            }
+            SpawnCycle();
             yield return new WaitForSeconds(_interval);
         }
         SaveData();
