@@ -377,6 +377,8 @@ MonoBehaviour:
   _fileName: physics_test.csv
   _filePath: Assets/Resources/
   _delimiter: ','
+  _dataSize: 2500
+  _samplingRate: 50
   _prefab: {fileID: 1460552808785814194, guid: 61cb90013b37718488986f8b28828472, type: 3}
   _isSpawningEnabled: 1
   _objectsPerCycle: 50
