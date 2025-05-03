@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class MovingPan : MonoBehaviour
 {
-    public float _speed = 1f;
-    public float _radius = 4f;
-    Vector3 _startPoint;
-    Vector3 _toPoint;
-    
-    void Start()
+    [SerializeField] private float _speed = 1f;
+    [SerializeField] private float _radius = 4f;
+    private Vector3 _startPoint;
+    private Vector3 _toPoint;
+
+    public void Start()
     {
         _startPoint = transform.position;
         _toPoint = _startPoint;
     }
 
-    
-    void Update()
+
+    private void Update()
     {
         if ((transform.position - _toPoint).sqrMagnitude < .02f)
         {
