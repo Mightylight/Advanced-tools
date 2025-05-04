@@ -44,6 +44,9 @@ public class Spawner : MonoBehaviour
     
     private float _currentFPS;
     private float _averageDeltaTime = 1f / 60f;
+    
+    public float CurrentFPS => _currentFPS;
+    public int ObjectsCount => _objectsCount;
 
     private void Start()
     {
@@ -82,7 +85,7 @@ public class Spawner : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.M))
         {
             print($"Object count {_objectsCount}");
-            SaveData();
+            SaveDataCSV(_dataList);
         }
 
         UpdateFPS();
@@ -92,21 +95,6 @@ public class Spawner : MonoBehaviour
     {
         _averageDeltaTime = Mathf.Lerp(_averageDeltaTime, Time.deltaTime, .05f);
         _currentFPS = 1f / _averageDeltaTime;
-    }
-
-    private void SaveData()
-    {
-        string[] data = new string[_dataList.Count];
-        for (int i = 0; i < _dataList.Count; i++)
-        {
-            string temp = _dataList[i];
-            string saveData = (i * _samplingInterval) + _seperator + temp + _seperator;
-            data[i] = saveData;
-        }
-        
-        File.WriteAllLines(Path.Combine(_filePath, _fileName), data);
-        print($"Saved to {_filePath}");
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
     
     private void SaveDataCSV(List<string> pList)
@@ -120,6 +108,7 @@ public class Spawner : MonoBehaviour
 
         File.WriteAllLines(Path.Combine(_filePath,_fileName), csvLines);
         Debug.Log($"CSV saved to: {_filePath}");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     private void SpawnCycle()
@@ -166,6 +155,5 @@ public class Spawner : MonoBehaviour
             SpawnCycle();
             yield return new WaitForSeconds(_interval);
         }
-        SaveDataCSV(_dataList);
     }
 }
