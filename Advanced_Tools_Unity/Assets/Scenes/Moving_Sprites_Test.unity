@@ -755,7 +755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb487833e8e7af345b4823db1c5aff44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fileName: Moving_Sprites_Test_unity.txt
+  _fileName: Moving_Sprites_Test_unity.csv
   _dataSize: 30000
   _samplingInterval: 1000
   _useContinuousSpawning: 0

@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb487833e8e7af345b4823db1c5aff44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fileName: physics_test.csv
+  _fileName: 2D_physics_test.csv
   _dataSize: 2500
   _samplingInterval: 50
   _useContinuousSpawning: 1
