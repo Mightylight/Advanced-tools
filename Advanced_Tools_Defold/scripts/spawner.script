@@ -9,6 +9,7 @@ local fps_table = {}
 
 -- Exposed variables
 go.property("FILE_NAME", -1)
+go.property("USE_CONTINOUS_SPAWNING", true)
 go.property("DATA_SIZE", 5000)
 go.property("OBJECT_PER_CYCLE", 10)
 go.property("INTERVAL", .5)
@@ -34,6 +35,34 @@ local function save_table(self)
 	end
 
 	file:close()
+	print("data saved at " .. file_path)
+	msg.post("scene_manager:/controller#scene_manager","show_menu")
+end
+
+local function spawn_cycle(self)
+	for i = 1, self.OBJECT_PER_CYCLE do
+		if index % self.SAMPLING_RATE == 0 then
+			table.insert(fps_table ,{objects = index, fps = fps.fps()})
+		end
+		index = index + 1
+		local x = math.random(self.XPLANE.x,self.XPLANE.y)
+		local y = math.random(self.YPLANE.x,self.YPLANE.y)
+		local z = math.random(self.ZPLANE.x,self.ZPLANE.y)
+		local position = vmath.vector3(x,y,z)
+		local spawned_prefab = factory.create("#factory",position)
+		local scale = vmath.vector3(.4,.4,.4)
+		go.set_scale(scale,spawned_prefab)
+		table.insert(prefab_table,spawned_prefab)
+		if index == self.DATA_SIZE then
+			if self.timer then
+				timer.cancel(self.timer)
+			end
+			save_table(self)
+		end
+	end
+end
+
+local function destroy_cycle(self)
 end
 
 function init(self)
@@ -45,36 +74,22 @@ function init(self)
 end	
 
 function on_input(self, action_id, action)
-	if action_id == hash("space") and action.pressed then
-		self.timer = timer.delay(self.INTERVAL, true, function ()
-			for i = 1, self.OBJECT_PER_CYCLE do
-				-- do things
-				if index % self.SAMPLING_RATE == 0 then
-					table.insert(fps_table ,{objects = index, fps = fps.fps(), memory = mem.mem()})
-				end
-				index = index + 1
-				local x = math.random(self.XPLANE.x,self.XPLANE.y)
-				local y = math.random(self.YPLANE.x,self.YPLANE.y)
-				local z = math.random(self.ZPLANE.x,self.ZPLANE.y)
-				local position = vmath.vector3(x,y,z)
-				local spawned_prefab = factory.create("#factory",position)
-				local scale = vmath.vector3(.4,.4,.4)
-				go.set_scale(scale,spawned_prefab)
-				table.insert(prefab_table,spawned_prefab)
-				if index == self.DATA_SIZE then
-					timer.cancel(self.timer)
-					save_table(self)
-				end
-			end
-		end)
-	end
-	
-	if action_id == hash("m") and action.pressed then
-		pprint(fps_table)
-		for key, value in pairs(fps_table) do
-			print("Objects: " .. value.objects .. ", fps: " .. value.fps)
+	if self.USE_CONTINOUS_SPAWNING then
+		if action_id == hash("space") and action.pressed then
+			self.timer = timer.delay(self.INTERVAL, true, function ()
+				spawn_cycle(self)
+			end)
 		end
-		
+	else
+		if action_id == hash("space") and action.pressed then
+			spawn_cycle(self)
+		elseif action_id == hash("minus") and action.pressed then
+			destroy_cycle(self)
+		end
+	end
+
+	if action_id == hash("m") and action.pressed then
+		save_table(self)
 	end
 
 	if action_id == hash("n") and action.pressed then
