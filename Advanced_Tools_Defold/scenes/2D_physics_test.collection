@@ -17,6 +17,10 @@ embedded_instances {
   "  texture: \\\"/assets/tilemaps/square.tilesource\\\"\\n"
   "}\\n"
   "\"\n"
+  "  scale {\n"
+  "    x: 0.1\n"
+  "    y: 0.1\n"
+  "  }\n"
   "}\n"
   "embedded_components {\n"
   "  id: \"collisionobject\"\n"
@@ -37,15 +41,15 @@ embedded_instances {
   "    index: 0\\n"
   "    count: 3\\n"
   "  }\\n"
-  "  data: 50.0\\n"
   "  data: 5.0\\n"
+  "  data: 0.5\\n"
   "  data: 0.5\\n"
   "}\\n"
   "\"\n"
   "}\n"
   ""
   position {
-    y: -15.0
+    y: -1.5
   }
 }
 embedded_instances {
@@ -70,17 +74,17 @@ embedded_instances {
   "  }\n"
   "  properties {\n"
   "    id: \"INTERVAL\"\n"
-  "    value: \"3.0\"\n"
+  "    value: \"0.5\"\n"
   "    type: PROPERTY_TYPE_NUMBER\n"
   "  }\n"
   "  properties {\n"
   "    id: \"XPLANE\"\n"
-  "    value: \"-40.0, 40.0, 0.0\"\n"
+  "    value: \"-4.0, 4.0, 0.0\"\n"
   "    type: PROPERTY_TYPE_VECTOR3\n"
   "  }\n"
   "  properties {\n"
   "    id: \"YPLANE\"\n"
-  "    value: \"80.0, 90.0, 0.0\"\n"
+  "    value: \"8.0, 9.0, 0.0\"\n"
   "    type: PROPERTY_TYPE_VECTOR3\n"
   "  }\n"
   "}\n"
@@ -102,7 +106,7 @@ embedded_instances {
   "near_z: 0.1\\n"
   "far_z: 1000.0\\n"
   "orthographic_projection: 1\\n"
-  "orthographic_zoom: 3.0\\n"
+  "orthographic_zoom: 30.0\\n"
   "\"\n"
   "}\n"
   ""
@@ -127,6 +131,10 @@ embedded_instances {
   "  texture: \\\"/assets/tilemaps/square.tilesource\\\"\\n"
   "}\\n"
   "\"\n"
+  "  scale {\n"
+  "    x: 0.1\n"
+  "    y: 0.1\n"
+  "  }\n"
   "}\n"
   "embedded_components {\n"
   "  id: \"collisionobject\"\n"
@@ -147,16 +155,16 @@ embedded_instances {
   "    index: 0\\n"
   "    count: 3\\n"
   "  }\\n"
-  "  data: 50.0\\n"
   "  data: 5.0\\n"
+  "  data: 0.5\\n"
   "  data: 0.5\\n"
   "}\\n"
   "\"\n"
   "}\n"
   ""
   position {
-    x: 50.0
-    y: 30.0
+    x: 5.0
+    y: 3.0
   }
   rotation {
     z: 0.70710677
@@ -180,6 +188,10 @@ embedded_instances {
   "  texture: \\\"/assets/tilemaps/square.tilesource\\\"\\n"
   "}\\n"
   "\"\n"
+  "  scale {\n"
+  "    x: 0.1\n"
+  "    y: 0.1\n"
+  "  }\n"
   "}\n"
   "embedded_components {\n"
   "  id: \"collisionobject\"\n"
@@ -200,16 +212,16 @@ embedded_instances {
   "    index: 0\\n"
   "    count: 3\\n"
   "  }\\n"
-  "  data: 50.0\\n"
   "  data: 5.0\\n"
+  "  data: 0.5\\n"
   "  data: 0.5\\n"
   "}\\n"
   "\"\n"
   "}\n"
   ""
   position {
-    x: -50.0
-    y: 30.0
+    x: -5.0
+    y: 3.0
   }
   rotation {
     z: 0.70710677

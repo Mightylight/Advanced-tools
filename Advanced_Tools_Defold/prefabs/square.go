@@ -13,6 +13,11 @@ embedded_components {
   "  texture: \"/assets/tilemaps/square.tilesource\"\n"
   "}\n"
   ""
+  scale {
+    x: 0.1
+    y: 0.1
+    z: 0.1
+  }
 }
 embedded_components {
   id: "collisionobject"
@@ -33,8 +38,8 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 1.75\n"
-  "  data: 1.75\n"
+  "  data: 0.175\n"
+  "  data: 0.175\n"
   "  data: 1.75\n"
   "}\n"
   ""

@@ -56,7 +56,7 @@ local function spawn_cycle(self)
 		local scale = vmath.vector3(.4,.4,.4)
 		go.set_scale(scale,spawned_prefab)
 		table.insert(prefab_table,spawned_prefab)
-		if index == self.DATA_SIZE then
+		if index == self.DATA_SIZE + 1 then
 			if self.timer then
 				timer.cancel(self.timer)
 			end
