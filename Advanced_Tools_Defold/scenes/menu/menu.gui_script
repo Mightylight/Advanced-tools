@@ -1,0 +1,14 @@
+function init(self)
+	msg.post(".", "acquire_input_focus")
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") and action.released then
+		print("allo")
+		if gui.pick_node(gui.get_node("moving_sprites_button"), action.x, action.y) then
+			msg.post("scene_manager:/controller#scene_manager","show_moving_sprites")
+		elseif gui.pick_node(gui.get_node("2D_physics_button"), action.x, action.y) then
+			msg.post("scene_manager:/controller#scene_manager","show_2D_physics")
+		end
+	end
+end

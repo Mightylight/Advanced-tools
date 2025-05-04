@@ -1,0 +1,71 @@
+script: "/scenes/menu/menu.gui_script"
+fonts {
+  name: "default"
+  font: "/builtins/fonts/default.font"
+}
+nodes {
+  position {
+    x: 280.0
+    y: 339.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "moving_sprites_button"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Moving sprites\n"
+  ""
+  font: "default"
+  id: "text"
+  parent: "moving_sprites_button"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 680.0
+    y: 339.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "2D_physics_button"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "2D Physics\n"
+  ""
+  font: "default"
+  id: "text1"
+  parent: "2D_physics_button"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

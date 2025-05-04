@@ -10,6 +10,7 @@ local fps_table = {}
 -- Exposed variables
 go.property("FILE_NAME", -1)
 go.property("USE_CONTINOUS_SPAWNING", true)
+go.property("RETURN_TO_MENU", true)
 go.property("DATA_SIZE", 5000)
 go.property("OBJECT_PER_CYCLE", 10)
 go.property("INTERVAL", .5)
@@ -36,7 +37,9 @@ local function save_table(self)
 
 	file:close()
 	print("data saved at " .. file_path)
-	msg.post("scene_manager:/controller#scene_manager","show_menu")
+	if self.RETURN_TO_MENU then
+		msg.post("scene_manager:/controller#scene_manager","show_menu")
+	end
 end
 
 local function spawn_cycle(self)

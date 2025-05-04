@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /scenes/2D_physics_test.collectionc
+main_collection = /scenes/scene_manager/scene_manager.collectionc
 render = /builtins/render/default.renderc
 
 [script]

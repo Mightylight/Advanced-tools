@@ -1,0 +1,30 @@
+local function show(self, proxy)
+	print("showing " .. proxy)
+	if self.current_proxy then
+		msg.post(self.current_proxy, "unload")
+		self.current_proxy = nil
+	end
+	msg.post(proxy, "async_load")
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.current_proxy = nil
+	msg.post("#", "show_menu") 
+	print(msg.url())
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("show_menu") then -- <4>
+		show(self, "#menu")
+	elseif message_id == hash("show_moving_sprites") then
+		show(self, "#moving_sprites")
+	elseif message_id == hash("show_2D_physics") then
+		show(self, "#2D_physics")
+	elseif message_id == hash("proxy_loaded") then -- <9>
+		self.current_proxy = sender -- <10>
+		msg.post(sender, "enable") -- <11>
+	elseif message_id == hash("proxy_unloaded") then
+		print("Unloaded", sender)
+	end
+end
