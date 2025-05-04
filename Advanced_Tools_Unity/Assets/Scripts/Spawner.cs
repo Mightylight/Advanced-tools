@@ -53,7 +53,7 @@ public class Spawner : MonoBehaviour
             Directory.CreateDirectory(_filePath);
         }
         
-        File.Create(_filePath + _fileName).Close();
+        //File.Create(_filePath + _fileName).Close();
     }
 
 
@@ -106,6 +106,7 @@ public class Spawner : MonoBehaviour
         
         File.WriteAllLines(Path.Combine(_filePath, _fileName), data);
         print($"Saved to {_filePath}");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     private void SpawnCycle()

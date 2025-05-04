@@ -263,7 +263,7 @@ Camera:
   m_GameObject: {fileID: 649645599}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -1086,12 +1086,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fileName: physics_test.csv
-  _filePath: Assets/Resources/
-  _delimiter: ','
+  _dataSize: 5000
+  _samplingInterval: 50
+  _useContinuousSpawning: 1
   _prefab: {fileID: 7278979560987990894, guid: 217db73085878024fbf96030f188b7a3, type: 3}
   _isSpawningEnabled: 1
-  _objectsPerCycle: 50
   _interval: 0.5
+  _xPlane: {x: -4, y: 4}
+  _zPlane: {x: -4, y: 4}
+  _yzPlane: {x: -10, y: 0}
 --- !u!4 &2125831537
 Transform:
   m_ObjectHideFlags: 0
