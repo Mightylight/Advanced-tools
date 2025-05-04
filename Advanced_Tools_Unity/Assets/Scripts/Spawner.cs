@@ -108,6 +108,19 @@ public class Spawner : MonoBehaviour
         print($"Saved to {_filePath}");
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
+    
+    private void SaveDataCSV(List<string> pList)
+    {
+        List<string> csvLines = new List<string> { "Index,Value" }; // Header
+
+        for (int i = 0; i < pList.Count; i++)
+        {
+            csvLines.Add($"{i},{pList[i]}");
+        }
+
+        File.WriteAllLines(Path.Combine(_filePath,_fileName), csvLines);
+        Debug.Log($"CSV saved to: {_filePath}");
+    }
 
     private void SpawnCycle()
     {
@@ -127,6 +140,11 @@ public class Spawner : MonoBehaviour
             GameObject spawnedObject = Instantiate(_prefab, position, Quaternion.identity);
             _objects.Add(spawnedObject);
             _objectsCount++;
+
+            if (_objectsCount < _dataSize) continue;
+            SaveDataCSV(_dataList);
+            _isSpawningEnabled = false;
+            break;
         }
     }
 
@@ -148,6 +166,6 @@ public class Spawner : MonoBehaviour
             SpawnCycle();
             yield return new WaitForSeconds(_interval);
         }
-        SaveData();
+        SaveDataCSV(_dataList);
     }
 }
