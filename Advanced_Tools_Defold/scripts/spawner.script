@@ -8,6 +8,7 @@ local prefab_table = {}
 local fps_table = {}
 
 -- Exposed variables
+go.property("FILE_NAME", -1)
 go.property("DATA_SIZE", 5000)
 go.property("OBJECT_PER_CYCLE", 10)
 go.property("INTERVAL", .5)
@@ -15,6 +16,25 @@ go.property("SAMPLING_RATE", 50)
 go.property("XPLANE", vmath.vector3(0,0,0))
 go.property("YPLANE", vmath.vector3(0,0,0))
 go.property("ZPLANE", vmath.vector3(0,0,0))
+
+local function save_table(self)
+	local file_path = sys.get_save_file("Advanced Tools", self.FILE_NAME .. ".csv")
+	local file = io.open(file_path, "w")
+	if not file then
+		error("Could not open file " .. self.FILE_NAME .. ".csv" .. " for writing.")
+	end
+
+	file:write("Key,Value\n")
+
+
+	for _, value in pairs(fps_table) do
+		local key = tostring(value.objects):gsub('"', '""')
+		value = tostring(value.fps):gsub('"', '""')
+		file:write(string.format('"%s","%s"\n', key, value))
+	end
+
+	file:close()
+end
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -43,6 +63,7 @@ function on_input(self, action_id, action)
 				table.insert(prefab_table,spawned_prefab)
 				if index == self.DATA_SIZE then
 					timer.cancel(self.timer)
+					save_table(self)
 				end
 			end
 		end)
@@ -53,6 +74,7 @@ function on_input(self, action_id, action)
 		for key, value in pairs(fps_table) do
 			print("Objects: " .. value.objects .. ", fps: " .. value.fps)
 		end
+		
 	end
 
 	if action_id == hash("n") and action.pressed then

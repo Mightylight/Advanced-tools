@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /scenes/moving_sprites.collectionc
+main_collection = /scenes/2D_physics_test.collectionc
 render = /builtins/render/default.renderc
 
 [script]
