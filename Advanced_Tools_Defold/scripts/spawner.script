@@ -104,6 +104,7 @@ end
 function update(self, dt)
 	fps.update()
 	mem.update()
+	msg.post("@render:", "draw_text", { text = "Count: " .. index , position = vmath.vector3(10, 40, 0) })
 
 	if draw_FPS then
 		fps.draw()
