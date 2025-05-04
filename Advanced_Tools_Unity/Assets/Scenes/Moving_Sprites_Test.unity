@@ -756,7 +756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fileName: Moving_Sprites_Test_unity.csv
-  _dataSize: 30000
+  _dataSize: 15000
   _samplingInterval: 1000
   _useContinuousSpawning: 0
   _prefab: {fileID: 4998161761775744335, guid: 9df552f4a8ee7304799b4de62a380b82, type: 3}

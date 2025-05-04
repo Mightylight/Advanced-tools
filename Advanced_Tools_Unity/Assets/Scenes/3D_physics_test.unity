@@ -1541,7 +1541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fileName: 3D_physics_test.csv
-  _dataSize: 5000
+  _dataSize: 3000
   _samplingInterval: 50
   _useContinuousSpawning: 1
   _prefab: {fileID: 7278979560987990894, guid: 217db73085878024fbf96030f188b7a3, type: 3}

@@ -17,7 +17,7 @@ embedded_instances {
   "  }\n"
   "  properties {\n"
   "    id: \"DATA_SIZE\"\n"
-  "    value: \"10000.0\"\n"
+  "    value: \"15000.0\"\n"
   "    type: PROPERTY_TYPE_NUMBER\n"
   "  }\n"
   "  properties {\n"
