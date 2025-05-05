@@ -130,7 +130,7 @@ public class Spawner : MonoBehaviour
             _objects.Add(spawnedObject);
             _objectsCount++;
 
-            if (_objectsCount < _dataSize) continue;
+            if (_objectsCount < _dataSize + 1) continue;
             SaveDataCSV(_dataList);
             _isSpawningEnabled = false;
             break;
